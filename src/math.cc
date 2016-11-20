@@ -5,10 +5,11 @@
 using namespace std;
 
 int main() {
-  string input = "1 + 2";
+  Lexer l1("1 + 2");
+  l1.process();
 
-  Lexer lexer(input);
-  lexer.process();
+  Lexer l2("1.1 + 2.20");
+  l2.process();
 
   return 0;
 }
