@@ -17,10 +17,12 @@ class Lexer {
     std::vector<Token*> tokens;
 
     void process_number();
-    void process_operator_plus();
+
+    bool isEmptySpace();
+    bool isEnd();
 
     bool isNumber();
     bool isOperatorPlus();
-    bool isEmptySpace();
-    bool isEnd();
+    bool isLeftParen();
+    bool isRightParen();
 };

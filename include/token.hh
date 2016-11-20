@@ -6,7 +6,9 @@ class Token {
   public:
     enum Type {
       Operator,
-      Number
+      Number,
+      LeftParen,
+      RightParen
     };
 
     Token(std::string value, Type t);

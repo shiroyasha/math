@@ -18,8 +18,28 @@ void Lexer::process() {
       process_number();
     }
 
-    if(isOperatorPlus())  { process_operator_plus(); }
-    if(isEmptySpace())    { position++; }
+    if(isOperatorPlus())  {
+      Token *t = new Token(input.substr(position, 1), Token::Operator);
+      tokens.push_back(t);
+
+      position++;
+    }
+
+    if(isLeftParen()) {
+      Token *t = new Token(input.substr(position, 1), Token::LeftParen);
+      tokens.push_back(t);
+
+      position++;
+    }
+
+    if(isRightParen()) {
+      Token *t = new Token(input.substr(position, 1), Token::RightParen);
+      tokens.push_back(t);
+
+      position++;
+    }
+
+    if(isEmptySpace()) { position++; }
 
     if(position == before) {
       cout << "Error" << endl;
@@ -54,15 +74,6 @@ void Lexer::process_number() {
   tokens.push_back(new Token(value, type));
 }
 
-void Lexer::process_operator_plus() {
-  std::string value = input.substr(position, 1);
-  Token::Type type  = Token::Operator;
-
-  tokens.push_back(new Token(value, type));
-
-  position++;
-}
-
 bool Lexer::isEnd() {
   return position == input.size();
 }
@@ -77,4 +88,12 @@ bool Lexer::isOperatorPlus() {
 
 bool Lexer::isEmptySpace() {
   return input[position] == ' ';
+}
+
+bool Lexer::isLeftParen() {
+  return input[position] == '(';
+}
+
+bool Lexer::isRightParen() {
+  return input[position] == ')';
 }
