@@ -4,14 +4,7 @@
 
 using namespace std;
 
-Token::Token(std::string v, Token::Type t) : value(v), type(t) { }
-
-void Token::display() {
-  if(type == Operator) { cout << "Operator: " << value << endl; }
-  if(type == Number)   { cout << "Number: " << value << endl; }
-}
-
-Lexer::Lexer(std::string input) : position(0), input(input) { }
+Lexer::Lexer(std::string input) : position(0), input(input) {}
 
 void Lexer::process() {
   while(!isEnd()) {

@@ -3,21 +3,7 @@
 #include <string>
 #include <vector>
 
-class Token {
-  public:
-    enum Type {
-      Operator,
-      Number
-    };
-
-    Token(std::string value, Type t);
-
-    void display();
-
-  private:
-    std::string value;
-    Type type;
-};
+#include "token.hh"
 
 class Lexer {
   public:
