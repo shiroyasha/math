@@ -16,48 +16,58 @@ void Parser::_parse() {
 
   std::cout << std::endl << "Parsing started" << std::endl;
 
-  parseExpression();
+  AST* ast = parseExpression();
 
-  ast.display();
+  std::cout << std::endl << "Parsing ended" << std::endl;
+
+  ast->display();
 }
 
-void Parser::parseExpression() {
+AST* Parser::parseExpression() {
   std::cout << "expr" << std::endl;
-  parseTerm();
-  parseExpressionRest();
-}
 
-void Parser::parseExpressionRest() {
-  std::cout << "expr'" << std::endl;
-  if(isEnd()) { return; }
+  AST* leftExpr = parseTerm();
 
-  if(currentType() == Token::OperatorPlus) {
-    accept();
-    parseExpression();
+  if(isEnd()) {
+    return leftExpr;
+  } else if(currentType() == Token::OperatorPlus) {
+    AST* op = accept();
+
+    AST* rightExpr = parseExpression();
+
+    op->add(leftExpr);
+    op->add(rightExpr);
+
+    return op;
+  } else {
+    return leftExpr;
   }
 }
 
-void Parser::parseTerm() {
+AST* Parser::parseTerm() {
   std::cout << "term" << std::endl;
-  parseFactor();
-  parseTermRest();
-}
 
-void Parser::parseTermRest() {
-  std::cout << "term'" << std::endl;
-  if(isEnd()) { return; }
+  AST* leftFactor = parseFactor();
 
-  if(currentType() == Token::OperatorTimes) {
-    accept();
-    parseTerm();
+  if(isEnd()) {
+    return leftFactor;
+  } else if(currentType() == Token::OperatorTimes) {
+    AST* op = accept();
+    AST* rightFactor = parseTerm();
+
+    op->add(leftFactor);
+    op->add(rightFactor);
+
+    return op;
+  } else {
+    return leftFactor;
   }
 }
 
-void Parser::parseFactor() {
-  std::cout << "factor" << std::endl;
-  if(currentType() == Token::Number) {
-    accept();
-  }
+AST* Parser::parseFactor() {
+  if(currentType() == Token::Number) { return accept(); }
+
+  throw "Failed while parsing factor";
 }
 
 bool Parser::isEnd() {
@@ -76,11 +86,14 @@ void Parser::next() {
   position++;
 }
 
-void Parser::accept() {
+AST* Parser::accept() {
   std::cout << "Accepted" << std::endl;
   current()->display();
 
-  ast.addParent(current());
+  AST* node = new AST();
+  node->token = current();
 
   next();
+
+  return node;
 }

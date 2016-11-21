@@ -5,22 +5,13 @@
 
 class AST {
   public:
-    struct Node {
-      Token* token = NULL;
-
-      Node* parent = NULL;
-      std::vector<Node*> children;
-
-      void display();
-      void display(int depth);
-    };
-
-    AST();
-    ~AST();
-
-    void addParent(Token* token);
+    Token* token = NULL;
 
     void display();
+    void display(int depth);
+
+    void add(AST* child);
+
   private:
-    Node* root = NULL;
+    std::vector<AST*> children;
 };
