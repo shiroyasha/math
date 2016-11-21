@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 AST* Parser::parse(std::string input) {
   Parser p(input);
 
@@ -29,7 +31,6 @@ AST* Parser::parseExpression() {
     return leftExpr;
   } else if(currentType() == Token::OperatorPlus) {
     AST* op = accept();
-
     AST* rightExpr = parseExpression();
 
     op->add(leftExpr);
@@ -62,6 +63,16 @@ AST* Parser::parseTerm() {
 AST* Parser::parseFactor() {
   if(currentType() == Token::Number) { return accept(); }
 
+  if(currentType() == Token::LeftParen) {
+    next();
+
+    AST* expr = parseExpression();
+
+    expect(Token::RightParen);
+
+    return expr;
+  }
+
   throw "Failed while parsing factor";
 }
 
@@ -88,4 +99,13 @@ AST* Parser::accept() {
   next();
 
   return node;
+}
+
+void Parser::expect(Token::Type type) {
+  if(currentType() == type) {
+    next();
+  } else {
+    std::cout << "Expected different type" << std::endl;
+    throw "Expected different type";
+  }
 }

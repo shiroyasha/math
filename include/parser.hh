@@ -29,5 +29,7 @@ class Parser {
     AST* parseExpression();
     AST* parseTerm();
     AST* parseFactor();
+
+    void expect(Token::Type type);
     AST* accept();
 };

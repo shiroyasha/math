@@ -28,7 +28,7 @@ std::vector<Token*>* Lexer::process() {
       t = new Token(input.substr(position, 1), Token::LeftParen);
 
       next();
-    } if(isRightParen()) {
+    } else if(isRightParen()) {
       t = new Token(input.substr(position, 1), Token::RightParen);
 
       next();
