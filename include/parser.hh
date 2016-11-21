@@ -1,7 +1,10 @@
 #pragma once
 
-#include "lexer.hh"
 #include <string>
+
+#include "lexer.hh"
+#include "ast.hh"
+
 
 class Parser {
   public:
@@ -13,6 +16,7 @@ class Parser {
     void _parse();
 
   private:
+    AST ast;
     Lexer lexer;
     int position;
 

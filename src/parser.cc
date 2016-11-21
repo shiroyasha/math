@@ -17,6 +17,8 @@ void Parser::_parse() {
   std::cout << std::endl << "Parsing started" << std::endl;
 
   parseExpression();
+
+  ast.display();
 }
 
 void Parser::parseExpression() {
@@ -63,9 +65,6 @@ bool Parser::isEnd() {
 }
 
 Token* Parser::current() {
-  /* std::cout << "current" << std::endl; */
-  /* std::cout << lexer.tokens.size() << std::endl; */
-  /* std::cout << position << std::endl; */
   return lexer.tokens.at(position);
 }
 
@@ -80,5 +79,8 @@ void Parser::next() {
 void Parser::accept() {
   std::cout << "Accepted" << std::endl;
   current()->display();
+
+  ast.addParent(current());
+
   next();
 }
