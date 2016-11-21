@@ -7,6 +7,8 @@
 
 class Lexer {
   public:
+    std::vector<Token*> tokens;
+
     Lexer(std::string input);
     ~Lexer();
     void process();
@@ -14,7 +16,6 @@ class Lexer {
   private:
     int position;
     std::string input;
-    std::vector<Token*> tokens;
 
     void process_number();
 
@@ -23,6 +24,7 @@ class Lexer {
 
     bool isNumber();
     bool isOperatorPlus();
+    bool isOperatorTimes();
     bool isLeftParen();
     bool isRightParen();
 };

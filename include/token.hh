@@ -5,11 +5,14 @@
 class Token {
   public:
     enum Type {
-      Operator,
+      OperatorPlus,
+      OperatorTimes,
       Number,
       LeftParen,
       RightParen
     };
+
+    Type type;
 
     Token(std::string value, Type t);
 
@@ -17,5 +20,4 @@ class Token {
 
   private:
     std::string value;
-    Type type;
 };

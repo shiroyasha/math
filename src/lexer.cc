@@ -19,7 +19,14 @@ void Lexer::process() {
     }
 
     if(isOperatorPlus())  {
-      Token *t = new Token(input.substr(position, 1), Token::Operator);
+      Token *t = new Token(input.substr(position, 1), Token::OperatorPlus);
+      tokens.push_back(t);
+
+      position++;
+    }
+
+    if(isOperatorTimes())  {
+      Token *t = new Token(input.substr(position, 1), Token::OperatorTimes);
       tokens.push_back(t);
 
       position++;
@@ -84,6 +91,10 @@ bool Lexer::isNumber() {
 
 bool Lexer::isOperatorPlus() {
   return input[position] == '+';
+}
+
+bool Lexer::isOperatorTimes() {
+  return input[position] == '*';
 }
 
 bool Lexer::isEmptySpace() {
