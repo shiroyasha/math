@@ -8,15 +8,16 @@
 
 class Parser {
   public:
-    static void parse(std::string input);
+    static AST* parse(std::string input);
 
     Parser(std::string input);
     ~Parser();
 
-    void _parse();
-
+    AST* _parse();
   private:
     Lexer lexer;
+    std::vector<Token*>* tokens = NULL;
+
     int position;
 
     void next();
@@ -26,12 +27,7 @@ class Parser {
     Token::Type currentType();
 
     AST* parseExpression();
-    /* AST* parseExpressionRest(); */
-
     AST* parseTerm();
-    /* AST* parseTermRest(); */
-
     AST* parseFactor();
-
     AST* accept();
 };

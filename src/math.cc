@@ -5,7 +5,11 @@
 using namespace std;
 
 int main() {
-  Parser::parse("1.1 + 2.20 * 2");
+  AST* ast = Parser::parse("1.1 + 2.20 * 2");
+
+  ast->display();
+
+  delete ast;
 
   return 0;
 }

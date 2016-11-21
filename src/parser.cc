@@ -2,30 +2,27 @@
 
 #include <iostream>
 
-void Parser::parse(std::string input) {
+AST* Parser::parse(std::string input) {
   Parser p(input);
-  p._parse();
+
+  return p._parse();
 }
 
 Parser::Parser(std::string input) : lexer(input), position(0) {}
 
 Parser::~Parser() {}
 
-void Parser::_parse() {
-  lexer.process();
-
-  std::cout << std::endl << "Parsing started" << std::endl;
+AST* Parser::_parse() {
+  tokens = lexer.process();
 
   AST* ast = parseExpression();
 
-  std::cout << std::endl << "Parsing ended" << std::endl;
+  delete tokens;
 
-  ast->display();
+  return ast;
 }
 
 AST* Parser::parseExpression() {
-  std::cout << "expr" << std::endl;
-
   AST* leftExpr = parseTerm();
 
   if(isEnd()) {
@@ -45,8 +42,6 @@ AST* Parser::parseExpression() {
 }
 
 AST* Parser::parseTerm() {
-  std::cout << "term" << std::endl;
-
   AST* leftFactor = parseFactor();
 
   if(isEnd()) {
@@ -71,11 +66,11 @@ AST* Parser::parseFactor() {
 }
 
 bool Parser::isEnd() {
-  return position == lexer.tokens.size();
+  return position == tokens->size();
 }
 
 Token* Parser::current() {
-  return lexer.tokens.at(position);
+  return tokens->at(position);
 }
 
 Token::Type Parser::currentType() {
@@ -87,9 +82,6 @@ void Parser::next() {
 }
 
 AST* Parser::accept() {
-  std::cout << "Accepted" << std::endl;
-  current()->display();
-
   AST* node = new AST();
   node->token = current();
 

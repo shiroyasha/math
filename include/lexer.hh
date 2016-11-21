@@ -7,20 +7,19 @@
 
 class Lexer {
   public:
-    std::vector<Token*> tokens;
-
     Lexer(std::string input);
     ~Lexer();
-    void process();
+    std::vector<Token*>* process();
 
   private:
     int position;
     std::string input;
 
-    void process_number();
+    Token* process_number();
 
     bool isEmptySpace();
     bool isEnd();
+    void next();
 
     bool isNumber();
     bool isOperatorPlus();
