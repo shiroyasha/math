@@ -16,15 +16,8 @@ int main() {
   };
 
   for(string input : inputs) {
-    cout << "Parsing: '" << input << "'" << endl;
-
-    cout << endl;
-
-    AST* ast = Parser::parse(input);
-    ast->display();
-    delete ast;
-
-    cout << endl;
+    double result = Evaluator::evaluate(input);
+    cout << input << " = " << result << endl;
   }
 
   return 0;

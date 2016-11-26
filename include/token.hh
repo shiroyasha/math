@@ -20,6 +20,5 @@ class Token {
 
     void display();
 
-  private:
     std::string value;
 };

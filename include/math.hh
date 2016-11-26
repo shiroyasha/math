@@ -4,3 +4,4 @@
 #include "lexer.hh"
 #include "ast.hh"
 #include "parser.hh"
+#include "evaluator.hh"
