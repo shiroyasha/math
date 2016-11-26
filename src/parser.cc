@@ -45,7 +45,7 @@ AST* Parser::parseTerm() {
 
   if(isEnd()) {
     return leftFactor;
-  } else if(currentType() == Token::OperatorTimes) {
+  } else if(currentType() == Token::OperatorTimes || currentType() == Token::OperatorDivide) {
     AST* op = accept();
     AST* rightFactor = parseTerm();
 

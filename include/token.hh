@@ -8,6 +8,7 @@ class Token {
       OperatorPlus,
       OperatorMinus,
       OperatorTimes,
+      OperatorDivide,
       Number,
       LeftParen,
       RightParen
