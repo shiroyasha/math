@@ -5,17 +5,19 @@
 using namespace std;
 
 int main() {
-  AST* ast1 = Parser::parse("1.1 + 2.20 * 2");
-  ast1->display();
-  delete ast1;
+  vector<string> inputs = {
+    "1.1 + 2.20 * 2",
+    "(1.1 + 2.20) * 2",
+    "(1.1 + (2.20)) * 2",
+    "2 - 1",
+    "(-1.1 - 2.20) * -2"
+  };
 
-  AST* ast2 = Parser::parse("(1.1 + 2.20) * 2");
-  ast2->display();
-  delete ast2;
-
-  AST* ast3 = Parser::parse("(1.1 + (2.20)) * 2");
-  ast3->display();
-  delete ast3;
+  for(string input : inputs) {
+    AST* ast = Parser::parse(input);
+    ast->display();
+    delete ast;
+  }
 
   return 0;
 }

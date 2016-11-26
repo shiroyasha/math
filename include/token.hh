@@ -6,6 +6,7 @@ class Token {
   public:
     enum Type {
       OperatorPlus,
+      OperatorMinus,
       OperatorTimes,
       Number,
       LeftParen,

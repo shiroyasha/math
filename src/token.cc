@@ -10,6 +10,7 @@ void Token::display() {
   if(type == Number) { cout << "Number: " << value << endl; }
 
   if(type == OperatorPlus)  { cout << "Operator: " << value << endl; }
+  if(type == OperatorMinus) { cout << "Operator: " << value << endl; }
   if(type == OperatorTimes) { cout << "Operator: " << value << endl; }
 
   if(type == LeftParen)  { cout << "Token: " << value << endl; }

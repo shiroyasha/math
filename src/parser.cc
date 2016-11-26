@@ -12,16 +12,14 @@ AST* Parser::parse(std::string input) {
 
 Parser::Parser(std::string input) : lexer(input), position(0) {}
 
-Parser::~Parser() {}
+Parser::~Parser() {
+  if(tokens != NULL) { delete tokens; }
+}
 
 AST* Parser::_parse() {
   tokens = lexer.process();
 
-  AST* ast = parseExpression();
-
-  delete tokens;
-
-  return ast;
+  return parseExpression();
 }
 
 AST* Parser::parseExpression() {
@@ -29,7 +27,7 @@ AST* Parser::parseExpression() {
 
   if(isEnd()) {
     return leftExpr;
-  } else if(currentType() == Token::OperatorPlus) {
+  } else if(currentType() == Token::OperatorPlus || currentType() == Token::OperatorMinus) {
     AST* op = accept();
     AST* rightExpr = parseExpression();
 
@@ -71,6 +69,20 @@ AST* Parser::parseFactor() {
     expect(Token::RightParen);
 
     return expr;
+  }
+
+  if(currentType() == Token::OperatorMinus) {
+    AST* unaryMinus = accept();
+
+    if(currentType() == Token::Number) {
+      AST* value = accept();
+
+      unaryMinus->add(value);
+    } else {
+      throw "Expected number";
+    }
+
+    return unaryMinus;
   }
 
   throw "Failed while parsing factor";

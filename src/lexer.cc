@@ -20,6 +20,10 @@ std::vector<Token*>* Lexer::process() {
       t = new Token(input.substr(position, 1), Token::OperatorPlus);
 
       next();
+    } else if(isOperatorMinus())  {
+      t = new Token(input.substr(position, 1), Token::OperatorMinus);
+
+      next();
     } else if(isOperatorTimes())  {
       t = new Token(input.substr(position, 1), Token::OperatorTimes);
 
@@ -80,6 +84,10 @@ bool Lexer::isNumber() {
 
 bool Lexer::isOperatorPlus() {
   return input[position] == '+';
+}
+
+bool Lexer::isOperatorMinus() {
+  return input[position] == '-';
 }
 
 bool Lexer::isOperatorTimes() {

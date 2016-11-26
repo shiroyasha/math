@@ -23,6 +23,7 @@ class Lexer {
 
     bool isNumber();
     bool isOperatorPlus();
+    bool isOperatorMinus();
     bool isOperatorTimes();
     bool isLeftParen();
     bool isRightParen();
