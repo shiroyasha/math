@@ -1,8 +1,6 @@
-#include "parser.hh"
+#include "parser.hpp"
 
 #include <iostream>
-
-using namespace std;
 
 AST* Parser::parse(std::string input) {
   Parser p(input);
@@ -13,7 +11,7 @@ AST* Parser::parse(std::string input) {
 Parser::Parser(std::string input) : lexer(input), position(0) {}
 
 Parser::~Parser() {
-  if(tokens != NULL) { delete tokens; }
+  if (tokens != NULL) { delete tokens; }
 }
 
 AST* Parser::_parse() {
@@ -25,9 +23,11 @@ AST* Parser::_parse() {
 AST* Parser::parseExpression() {
   AST* leftExpr = parseTerm();
 
-  if(isEnd()) {
-    return leftExpr;
-  } else if(currentType() == Token::OperatorPlus || currentType() == Token::OperatorMinus) {
+  if (isEnd()) { return leftExpr; }
+
+  auto type = currentType();
+
+  if (type == Token::OperatorPlus || type == Token::OperatorMinus) {
     AST* op = accept();
     AST* rightExpr = parseExpression();
 
@@ -35,17 +35,19 @@ AST* Parser::parseExpression() {
     op->add(rightExpr);
 
     return op;
-  } else {
-    return leftExpr;
   }
+
+  return leftExpr;
 }
 
 AST* Parser::parseTerm() {
   AST* leftFactor = parseFactor();
 
-  if(isEnd()) {
-    return leftFactor;
-  } else if(currentType() == Token::OperatorTimes || currentType() == Token::OperatorDivide) {
+  if (isEnd()) { return leftFactor; }
+
+  auto type = currentType();
+
+  if (type == Token::OperatorTimes || type == Token::OperatorDivide) {
     AST* op = accept();
     AST* rightFactor = parseTerm();
 
@@ -53,15 +55,15 @@ AST* Parser::parseTerm() {
     op->add(rightFactor);
 
     return op;
-  } else {
-    return leftFactor;
   }
+
+  return leftFactor;
 }
 
 AST* Parser::parseFactor() {
-  if(currentType() == Token::Number) { return accept(); }
+  if (currentType() == Token::Number) { return accept(); }
 
-  if(currentType() == Token::LeftParen) {
+  if (currentType() == Token::LeftParen) {
     next();
 
     AST* expr = parseExpression();
@@ -71,10 +73,10 @@ AST* Parser::parseFactor() {
     return expr;
   }
 
-  if(currentType() == Token::OperatorMinus) {
+  if (currentType() == Token::OperatorMinus) {
     AST* unaryMinus = accept();
 
-    if(currentType() == Token::Number) {
+    if (currentType() == Token::Number) {
       AST* value = accept();
 
       unaryMinus->add(value);
@@ -114,7 +116,7 @@ AST* Parser::accept() {
 }
 
 void Parser::expect(Token::Type type) {
-  if(currentType() == type) {
+  if (currentType() == type) {
     next();
   } else {
     std::cout << "Expected different type" << std::endl;

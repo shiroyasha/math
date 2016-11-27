@@ -3,9 +3,9 @@
 #include <vector>
 #include <string>
 
-#include "token.hh"
-#include "ast.hh"
-#include "parser.hh"
+#include "token.hpp"
+#include "ast.hpp"
+#include "parser.hpp"
 
 class Evaluator {
   public:

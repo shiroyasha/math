@@ -1,11 +1,10 @@
-#include "math.hh"
+#include "math.hpp"
 
 #include <iostream>
-
-using namespace std;
+#include <vector>
 
 int main() {
-  vector<string> inputs = {
+  std::vector<std::string> inputs = {
     "1.1 + 2.20 * 2",
     "(1.1 + 2.20) * 2",
     "(1.1 + (2.20)) * 2",
@@ -15,9 +14,10 @@ int main() {
     "1 /(2 - 3)",
   };
 
-  for(string input : inputs) {
+  for (std::string input : inputs) {
     double result = Evaluator::evaluate(input);
-    cout << input << " = " << result << endl;
+
+    std::cout << input << " = " << result << std::endl;
   }
 
   return 0;

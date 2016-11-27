@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "token.hh"
+#include "token.hpp"
 
 class Lexer {
   public:

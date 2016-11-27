@@ -1,11 +1,11 @@
-#include "evaluator.hh"
+#include "evaluator.hpp"
 
 #include <iostream>
 #include <algorithm>
 
 double Evaluator::evaluate(std::string input) {
   AST* ast = Parser::parse(input);
-  /* ast->display(); */
+  ast->display();
 
   double result = Evaluator::evaluateAST(ast);
 
@@ -15,7 +15,7 @@ double Evaluator::evaluate(std::string input) {
 }
 
 double Evaluator::evaluateAST(AST* ast) {
-  switch(ast->token->type) {
+  switch (ast->token->type) {
     case Token::Number:
       return std::stold(ast->token->value);
 
@@ -45,8 +45,7 @@ std::vector<double> Evaluator::evaluateChildren(AST* ast) {
     ast->children.begin(),
     ast->children.end(),
     result.begin(),
-    Evaluator::evaluateAST
-  );
+    Evaluator::evaluateAST);
 
   return result;
 }
@@ -60,7 +59,7 @@ double Evaluator::plus(AST* ast) {
 double Evaluator::minus(AST* ast) {
   std::vector<double> children = Evaluator::evaluateChildren(ast);
 
-  if(children.size() == 1) {
+  if (children.size() == 1) {
     return -children.at(0);
   } else {
     return children.at(0) - children.at(1);
@@ -76,7 +75,7 @@ double Evaluator::times(AST* ast) {
 double Evaluator::divide(AST* ast) {
   std::vector<double> children = Evaluator::evaluateChildren(ast);
 
-  if(children.at(1) == 0) {
+  if (children.at(1) == 0) {
     throw "Division by zero!";
   } else {
     return children.at(0) / children.at(1);

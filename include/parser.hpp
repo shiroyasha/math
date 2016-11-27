@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "lexer.hh"
-#include "ast.hh"
+#include "lexer.hpp"
+#include "ast.hpp"
 
 
 class Parser {

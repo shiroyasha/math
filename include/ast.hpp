@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "token.hh"
+#include "token.hpp"
 
 class AST {
   public:

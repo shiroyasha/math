@@ -1,8 +1,6 @@
 #include <iostream>
 
-#include "lexer.hh"
-
-using namespace std;
+#include "lexer.hpp"
 
 Lexer::Lexer(std::string input) : position(0), input(input) {}
 Lexer::~Lexer() {}
@@ -10,43 +8,43 @@ Lexer::~Lexer() {}
 std::vector<Token*>* Lexer::process() {
   std::vector<Token*>* tokens = new std::vector<Token*>();
 
-  while(!isEnd()) {
+  while (!isEnd()) {
     int before = position;
     Token *t = NULL;
 
-    if(input[position] > '0' && input[position] <= '9') {
+    if (input[position] > '0' && input[position] <= '9') {
       t = process_number();
-    } else if(isOperatorPlus())  {
+    } else if (isOperatorPlus())  {
       t = new Token(input.substr(position, 1), Token::OperatorPlus);
 
       next();
-    } else if(isOperatorMinus())  {
+    } else if (isOperatorMinus())  {
       t = new Token(input.substr(position, 1), Token::OperatorMinus);
 
       next();
-    } else if(isOperatorTimes())  {
+    } else if (isOperatorTimes())  {
       t = new Token(input.substr(position, 1), Token::OperatorTimes);
 
       next();
-    } else if(isOperatorDivide())  {
+    } else if (isOperatorDivide())  {
       t = new Token(input.substr(position, 1), Token::OperatorDivide);
 
       next();
-    } else if(isLeftParen()) {
+    } else if (isLeftParen()) {
       t = new Token(input.substr(position, 1), Token::LeftParen);
 
       next();
-    } else if(isRightParen()) {
+    } else if (isRightParen()) {
       t = new Token(input.substr(position, 1), Token::RightParen);
 
       next();
-    } else if(isEmptySpace()) {
+    } else if (isEmptySpace()) {
       next();
     }
 
-    if(t != NULL) { tokens->push_back(t); }
+    if (t != NULL) { tokens->push_back(t); }
 
-    if(position == before) { cout << "Error" << endl; break; }
+    if (position == before) { std::cout << "Error" << std::endl; break; }
   }
 
   return tokens;
@@ -58,14 +56,14 @@ Token* Lexer::process_number() {
   next();
 
   // read in numbers
-  while(!isEnd() && isNumber()) { next(); }
+  while (!isEnd() && isNumber()) { next(); }
 
   // decimal places?
-  if(input[position] == '.') {
+  if (input[position] == '.') {
     next();
 
     // read all decimal values
-    while(!isEnd() && isNumber()) { next(); }
+    while (!isEnd() && isNumber()) { next(); }
   }
 
   std::string value = input.substr(from, position - from);
