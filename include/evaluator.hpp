@@ -18,4 +18,5 @@ class Evaluator {
     static double minus(AST* ast);
     static double times(AST* ast);
     static double divide(AST* ast);
+    static double factoriel(AST* ast);
 };

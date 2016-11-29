@@ -57,6 +57,14 @@ AST* Parser::parseTerm() {
     return op;
   }
 
+  if (type == Token::OperatorFactoriel) {
+    AST* op = accept();
+
+    op->add(leftFactor);
+
+    return op;
+  }
+
   return leftFactor;
 }
 

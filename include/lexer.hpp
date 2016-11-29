@@ -26,6 +26,7 @@ class Lexer {
     bool isOperatorMinus();
     bool isOperatorTimes();
     bool isOperatorDivide();
+    bool isOperatorFactoriel();
     bool isLeftParen();
     bool isRightParen();
 };

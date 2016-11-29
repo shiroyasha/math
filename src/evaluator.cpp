@@ -31,8 +31,11 @@ double Evaluator::evaluateAST(AST* ast) {
     case Token::OperatorDivide:
       return divide(ast);
 
+    case Token::OperatorFactoriel:
+      return factoriel(ast);
+
     default:
-      throw "Unrecognized operator";
+      throw std::string("Evaluator: Unrecognized operator '" + ast->token->value + "'");
   }
 }
 
@@ -54,6 +57,21 @@ double Evaluator::plus(AST* ast) {
   std::vector<double> children = Evaluator::evaluateChildren(ast);
 
   return children.at(0) + children.at(1);
+}
+
+double Evaluator::factoriel(AST* ast) {
+  std::vector<double> children = Evaluator::evaluateChildren(ast);
+
+  double limit = children.at(0);
+  double result = 1;
+
+  if(limit < 0) { throw std::string("Factoriel: Number less them 0"); }
+
+  for(int i = 1; i <= limit; i++) {
+    result *= i;
+  }
+
+  return result;
 }
 
 double Evaluator::minus(AST* ast) {

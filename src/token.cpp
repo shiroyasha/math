@@ -14,6 +14,7 @@ void Token::display() {
     case OperatorMinus:
     case OperatorTimes:
     case OperatorDivide:
+    case OperatorFactoriel:
       std::cout << "Operator: " << value;
       break;
 

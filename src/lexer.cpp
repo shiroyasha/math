@@ -30,6 +30,10 @@ std::vector<Token*>* Lexer::process() {
       t = new Token(input.substr(position, 1), Token::OperatorDivide);
 
       next();
+    } else if (isOperatorFactoriel())  {
+      t = new Token(input.substr(position, 1), Token::OperatorFactoriel);
+
+      next();
     } else if (isLeftParen()) {
       t = new Token(input.substr(position, 1), Token::LeftParen);
 
@@ -98,6 +102,10 @@ bool Lexer::isOperatorTimes() {
 
 bool Lexer::isOperatorDivide() {
   return input[position] == '/';
+}
+
+bool Lexer::isOperatorFactoriel() {
+  return input[position] == '!';
 }
 
 bool Lexer::isEmptySpace() {
