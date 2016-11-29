@@ -53,18 +53,6 @@ AST* Parser::parseTerm() {
 
   auto type = currentType();
 
-  if (type == Token::OperatorFactoriel) {
-    AST* op = accept();
-
-    op->add(leftFactor);
-
-    leftFactor = op;
-  }
-
-  if (isEnd()) { return leftFactor; }
-
-  type = currentType();
-
   if (type == Token::OperatorTimes || type == Token::OperatorDivide) {
     AST* op = accept();
     AST* rightFactor = parseTerm();
@@ -79,6 +67,24 @@ AST* Parser::parseTerm() {
 }
 
 AST* Parser::parseFactor() {
+  AST* simpleFactor = parseSimpleFactor();
+
+  if (isEnd()) { return simpleFactor; }
+
+  auto type = currentType();
+
+  if (type == Token::OperatorFactoriel) {
+    AST* op = accept();
+
+    op->add(simpleFactor);
+
+    return op;
+  }
+
+  return simpleFactor;
+}
+
+AST* Parser::parseSimpleFactor() {
   if (currentType() == Token::Number) { return accept(); }
 
   if (currentType() == Token::LeftParen) {
