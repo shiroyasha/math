@@ -17,7 +17,13 @@ Parser::~Parser() {
 AST* Parser::_parse() {
   tokens = lexer.process();
 
-  return parseExpression();
+  AST* result = parseExpression();
+
+  if(isEnd()) {
+    return result;
+  } else {
+    throw std::string("Parser: Could not parse whole expression. Next token = " + current()->value);
+  }
 }
 
 AST* Parser::parseExpression() {
@@ -47,20 +53,24 @@ AST* Parser::parseTerm() {
 
   auto type = currentType();
 
+  if (type == Token::OperatorFactoriel) {
+    AST* op = accept();
+
+    op->add(leftFactor);
+
+    leftFactor = op;
+  }
+
+  if (isEnd()) { return leftFactor; }
+
+  type = currentType();
+
   if (type == Token::OperatorTimes || type == Token::OperatorDivide) {
     AST* op = accept();
     AST* rightFactor = parseTerm();
 
     op->add(leftFactor);
     op->add(rightFactor);
-
-    return op;
-  }
-
-  if (type == Token::OperatorFactoriel) {
-    AST* op = accept();
-
-    op->add(leftFactor);
 
     return op;
   }
